@@ -1,48 +1,69 @@
 import {useState} from 'react'
+
 import {
   MainContainer,
-  CreditCardContainer,
-  Heading,
-  CreditCardImage,
+  CreditCardDetailsContainer,
+  CreditCardHeadingContainer,
+  CreditCardHeading,
+  HorizontalLine,
+  CardContainer,
+  Card,
   CardNumber,
-  CardName,
-  CardHolder,
+  CardholderNameText,
+  CardholderName,
   PaymentContainer,
-  Payment,
+  PaymentMethodContainer,
+  PaymentMethodHeading,
   Input,
 } from './styledComponents'
 
 const CreditCard = () => {
-  const [atmNumber, setAtmNumber] = useState('')
-  const [name, setName] = useState('')
+  const [cardNumber, setCardNumber] = useState('')
+  const [cardholderName, setCardHolderName] = useState('')
+  const cardholderNameInUppercase = cardholderName.toUpperCase()
+
+  const onChangeCardholderName = event => {
+    setCardHolderName(event.target.value)
+  }
+
+  const onChangeCardNumber = event => {
+    setCardNumber(event.target.value)
+  }
 
   return (
-    <>
-      <MainContainer>
-        <CreditCardContainer>
-          <Heading>CREDIT CARD</Heading>
-          <CreditCardImage data-testid="creditCard">
-            <CardNumber>{atmNumber}</CardNumber>
-            <CardHolder>CARDHOLDER NAME</CardHolder>
-            <CardName>{name}</CardName>
-          </CreditCardImage>
-        </CreditCardContainer>
-        <PaymentContainer>
-          <Payment>Payment Method</Payment>
+    <MainContainer>
+      <CreditCardDetailsContainer>
+        <CreditCardHeadingContainer>
+          <CreditCardHeading>CREDIT CARD</CreditCardHeading>
+          <HorizontalLine />
+        </CreditCardHeadingContainer>
+        <CardContainer>
+          <Card data-testid="creditCard">
+            <CardNumber>{cardNumber}</CardNumber>
+            <CardholderNameText>CARDHOLDER NAME</CardholderNameText>
+            <CardholderName>{cardholderNameInUppercase}</CardholderName>
+          </Card>
+        </CardContainer>
+      </CreditCardDetailsContainer>
+      <PaymentContainer>
+        <PaymentMethodContainer>
+          <PaymentMethodHeading>Payment Method</PaymentMethodHeading>
           <Input
             type="text"
             placeholder="Card Number"
-            onChange={event => setAtmNumber(event.target.value)}
+            value={cardNumber}
+            onChange={onChangeCardNumber}
           />
-
           <Input
             type="text"
             placeholder="Cardholder Name"
-            onChange={event => setName(event.target.value)}
+            value={cardholderName}
+            onChange={onChangeCardholderName}
           />
-        </PaymentContainer>
-      </MainContainer>
-    </>
+        </PaymentMethodContainer>
+      </PaymentContainer>
+    </MainContainer>
   )
 }
+
 export default CreditCard
